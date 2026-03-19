@@ -109,6 +109,7 @@ body {
         transition: 0.2s;
         background-color: #fff;
         width: 13ch;
+        padding:.175rem .5rem;
       }
 
       select::picker-icon {
@@ -181,7 +182,6 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     align-items: stretch;
   }
-  
 
   a {
     text-decoration: none;
@@ -215,6 +215,21 @@ main {
     height:100%;
     display:flex;
     flex-direction: column;
+
+    &.show-detail {
+      display:block;
+      padding-bottom: 0;
+
+      h2 {
+        margin-bottom: 1rem;
+      }
+
+      img {
+        max-width:60%;
+        float:left;
+        margin-right: 2rem;
+      }
+    }
 
     &:hover {
       background-color: #f9f9f9;
