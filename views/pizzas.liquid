@@ -3,11 +3,24 @@
 <main>
   <header>
     <h1>
-      Onze nerdy pizza's <small>{{ meta.filter_count }} / {{ meta.total_count }}</small>
+      Nerdy pizza's <small>{{ meta.filter_count }} / {{ meta.total_count }}</small>
     </h1>
+
+    <p>
     {% if selectedType != "" %}
-     <p>Je hebt gefiltered op: <strong>{{selectedType}}</strong></p>
+      {% case selectedType %}
+        {% when "vegetarisch" %}
+          {% assign icon = "🥦" %}
+        {% when "vlees" %}
+          {% assign icon = "🥩" %}
+        {% when "vis" %}
+          {% assign icon = "🐟" %}
+        {% else %}
+          {% assign icon = "🍕" %}
+      {% endcase %}
+      Je hebt gefiltered op: <strong>{{selectedType}} {{ icon }}</strong>
     {% endif %}
+    </p>
   </header>
   
   {% for pizza in pizzas %}
