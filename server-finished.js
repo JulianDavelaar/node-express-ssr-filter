@@ -17,18 +17,36 @@ app.get('/', async function (request, response) {
 
 app.get('/pizzas', async function (request, response) {
   const params = new URLSearchParams()
-  
-  params.set('sort', 'name')
-  params.set('meta', 'total_count,filter_count')
 
-  if (request.query.type) {
-    params.set('filter[type][_eq]', request.query.type)
+  const type = request.query.type || ''
+  const sort = request.query.sort || ''   
+  
+  let sortField = 'name' 
+
+  if (sort === 'low-high') {
+    sortField = 'price'      
+  } else if (sort === 'high-low') {
+    sortField = '-price'    
   }
 
-  const pizzasResponse = await fetch('https://fdnd-agency.directus.app/items/demo_pizzas?' + params.toString())
+  params.set('sort', sortField)
+
+  if (type) {
+    params.set('filter[type][_eq]', type)
+  }
+
+  params.set('meta', 'total_count,filter_count')
+
+  const url = 'https://fdnd-agency.directus.app/items/demo_pizzas?' + params.toString()
+  const pizzasResponse = await fetch(url)
   const pizzasJSON = await pizzasResponse.json()
   
-  response.render('pizzas.liquid', {pizzas: pizzasJSON.data, selectedType: request.query.type || '', meta: pizzasJSON.meta})
+  response.render('pizzas.liquid', {
+    pizzas: pizzasJSON.data,
+    selectedType: type,
+    selectedSort: sort,
+    meta: pizzasJSON.meta
+  })
 })
 
 app.get('/pizzas/:slug', async function (request, response) { 

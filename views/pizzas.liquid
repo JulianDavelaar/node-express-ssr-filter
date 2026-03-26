@@ -1,4 +1,4 @@
-{% render 'partials/head.liquid', selectedType:selectedType %}
+{% render 'partials/head.liquid', selectedType:selectedType, selectedSort:selectedSort %}
 
 <main>
   <header>
@@ -7,24 +7,40 @@
     </h1>
 
     <p>
-    {% if selectedType != "" %}
-      {% case selectedType %}
-        {% when "vegetarisch" %}
-          {% assign icon = "🥦" %}
-        {% when "vlees" %}
-          {% assign icon = "🥩" %}
-        {% when "vis" %}
-          {% assign icon = "🐟" %}
-        {% else %}
-          {% assign icon = "🍕" %}
-      {% endcase %}
-      Je hebt gefiltered op: <strong>{{selectedType}} {{ icon }}</strong>
-    {% endif %}
+      {%- if selectedType != "" -%}
+        {%- case selectedType -%}
+          {%- when "vegetarisch" -%}
+            {%- assign icon = "🥦" -%}
+          {%- when "vlees" -%}
+            {%- assign icon = "🥩" -%}
+          {%- when "vis" -%}
+            {%- assign icon = "🐟" -%}
+          {%- else -%}
+            {%- assign icon = "🍕" -%}
+        {%- endcase -%}
+        <span>Je hebt gefilterd op <strong>{{ selectedType }} {{ icon }}</strong></span>
+      {%- endif -%}
+
+      {%- if selectedSort != "" -%}
+        {%- case selectedSort -%}
+          {%- when "low-high" -%}
+            {%- assign sortLabel = "<strong>prijs:</strong> laag 💰 → hoog 💰💰💰" -%}
+          {%- when "high-low" -%}
+            {%- assign sortLabel = "<strong>prijs:</strong> hoog 💰💰💰 → laag 💰" -%}
+          {%- else -%}
+            {%- assign sortLabel = "standaard volgorde" -%}
+        {%- endcase -%}
+        <span>en gesorteerd op {{ sortLabel }}</span>
+      {%- endif -%}
+    </p>
+
+    <p>
+      
     </p>
   </header>
   
   {% for pizza in pizzas %}
-    <a href="/pizzas/{{pizza.slug}}">
+    <a href="/pizzas/{{ pizza.slug }}">
       {% render 'partials/pizza_card.liquid', pizza:pizza %}
     </a>
   {% endfor %}

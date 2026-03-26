@@ -36,9 +36,19 @@
             <option value="vlees" {% if selectedType == "vlees" %}selected{% endif %} data-icon="🥩">vlees</option>
             <option value="vis" {% if selectedType == "vis" %}selected{% endif %}data-icon="🐟">vis</option>
           </select>
-
-          <input type="submit" value="filter">
         </label>
+
+        <label>
+          Sorteer op prijs
+
+          <select name="sort">
+            <option value="" {% if selectedSort == "" %}selected{% endif %} disabled hidden>kies een volgorde</option>
+            <option value="low-high" {% if selectedSort == "low-high" %}selected{% endif %} data-icon="💰">laagste prijs</option>
+            <option value="high-low" {% if selectedSort == "high-low" %}selected{% endif %} data-icon="💰💰💰">hoogste prijs</option>
+          </select>
+        </label>
+
+        <input type="submit" value="filter">
       </form>
     </header>
     
