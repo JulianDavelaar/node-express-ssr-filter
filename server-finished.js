@@ -19,17 +19,18 @@ app.get('/pizzas', async function (request, response) {
   const params = new URLSearchParams()
 
   const type = request.query.type || ''
-  const sort = request.query.sort || ''   
-  
+  const price = request.query.price || ''   
+
   let sortField = 'name' 
 
-  if (sort === 'low-high') {
-    sortField = 'price'      
-  } else if (sort === 'high-low') {
-    sortField = '-price'    
+  if (price === 'low-high') {
+    params.set('sort', 'price')
+  } else if (price === 'high-low') {
+    params.set('sort', '-price') 
+  } else {
+    params.set('sort', 'name') 
   }
 
-  params.set('sort', sortField)
 
   if (type) {
     params.set('filter[type][_eq]', type)
@@ -44,7 +45,7 @@ app.get('/pizzas', async function (request, response) {
   response.render('pizzas.liquid', {
     pizzas: pizzasJSON.data,
     selectedType: type,
-    selectedSort: sort,
+    selectedSort: price,
     meta: pizzasJSON.meta
   })
 })

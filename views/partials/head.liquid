@@ -41,7 +41,7 @@
         <label>
           Sorteer op prijs
 
-          <select name="sort">
+          <select name="price">
             <option value="" {% if selectedSort == "" %}selected{% endif %} disabled hidden>kies een volgorde</option>
             <option value="low-high" {% if selectedSort == "low-high" %}selected{% endif %} data-icon="💰">laagste prijs</option>
             <option value="high-low" {% if selectedSort == "high-low" %}selected{% endif %} data-icon="💰💰💰">hoogste prijs</option>
