@@ -19,9 +19,9 @@ app.get('/pizzas', async function (request, response) {
   const params = new URLSearchParams()
 
   const type = request.query.type || ''
-  const price = request.query.price || ''   
-
-  let sortField = 'name' 
+  const price = request.query.price || ''
+  
+  // const { type = '', price = '' } = request.query // use object destructuring
 
   if (price === 'low-high') {
     params.set('sort', 'price')
@@ -31,10 +31,12 @@ app.get('/pizzas', async function (request, response) {
     params.set('sort', 'name') 
   }
 
-
   if (type) {
     params.set('filter[type][_eq]', type)
   }
+
+  // type && params.set('filter[type][_eq]', type) // use short circuiting
+    
 
   params.set('meta', 'total_count,filter_count')
 
