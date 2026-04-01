@@ -12,8 +12,61 @@ app.set('views', './views')
 // HOME (/)
 // https://fdnd-agency.directus.app/items/demo_pizzas?sort[]=-ordered&limit=4
 
+
+
+// 1. route aanmaken
+app.get('/', async function(request, response) {
+// note:  op moment dat je naar de / gaat van de pizzaria wordt deze functie(function) uitgevoerd -> request = vragen van data uit servers em response = servers reageren met gevraagde data
+// note: omdat de data van ver opgehaald moet worden en alles heel snel gaat heb je async, asynchroon nodig, hierbij hoor ook await voor de fetch, zodat de JS wacht op response en het in stapen doet
+
+// 2. data uit de API/DB halen
+const pizzasResponse = await fetch('https://fdnd-agency.directus.app/items/demo_pizzas?sort[]=-ordered&limit=4')
+const pizzasJSON = await pizzasResponse.json()
+console.log(pizzasJSON)
+// 3. data meegeven aan de view & HTML renderen en ten slotte teruggeven aan de browser aka client
+response.render('pizzas.liquid', {pizzas: pizzasJSON.data})
+// note: eerst dus verwijzen naar de main view
+})
+
+
+// voorbeeld
+// function clown(shoesize, Laugh)
+
+
+
 // PIZZAS (/pizzas)
 // https://fdnd-agency.directus.app/items/demo_pizzas?sort=name&meta=total_count,filter_count
+
+app.get('/pizzas', async function(request, response){
+// 2. data uit de API/DB halen
+const pizzasResponse = await fetch('https://fdnd-agency.directus.app/items/demo_pizzas?sort=name&meta=total_count,filter_count')
+const pizzasJSON = await pizzasResponse.json()
+
+response.render('pizza.liquid', {pizzas: pizzasJSON.data, meta: pizzasJSON.meta})
+
+})
+
+
+app.post(':pizzaSlug', async function(request, response) {
+  
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // PIZZAS FILTERED (/pizzas?type=vegetarisch)
 // https://fdnd-agency.directus.app/items/demo_pizzas?sort=name&meta=total_count,filter_count&filter[type][_eq]=vegetarisch
@@ -21,13 +74,13 @@ app.set('views', './views')
 // PIZZA (/pizzas/caprese-captioni)
 // https://fdnd-agency.directus.app/items/demo_pizzas?filter[slug][_eq]=caprese-captioni
 
-app.get('/', async function(request, response){
-  const pizzasResponse = await fetch('https://fdnd-agency.directus.app/items/demo_pizzas?sort=-ordered&limit=4')
-  const pizzasJSON = await pizzasResponse.json()
+// app.get('/', async function(request, response){
+//   const pizzasResponse = await fetch('https://fdnd-agency.directus.app/items/demo_pizzas?sort=-ordered&limit=4')
+//   const pizzasJSON = await pizzasResponse.json()
 
-  response.render('index.liquid', { pizza:pizzasResponse })
+//   response.render('index.liquid', { pizza:pizzasResponse })
 
-})
+// })
 
 
 
